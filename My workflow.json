@@ -1,0 +1,130 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -256,
+        32
+      ],
+      "id": "c68e5941-f8b8-4bd3-933c-2379db2f8b44",
+      "name": "When chat message received",
+      "webhookId": "c48eac5e-5313-4360-a321-e59fbd84b673"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a Senior Data Analyst. You have access to a Google Sheets tool that returns rows of business data. When the user asks a question, you MUST use the tool to fetch the relevant data, and then YOU must perform the necessary calculations, logic, sorting, or aggregations (such as summing totals, counting units, or comparing sales reps) to provide the final, synthesized answer. Never tell the user to do the analysis themselves. Deliver the final calculated result clearly and professionally"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -48,
+        32
+      ],
+      "id": "45cb59bb-fbe7-4a2a-a180-ede40f96118b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        208
+      ],
+      "id": "e1f39a3a-c8df-4e0f-b8f2-c8afb11210b3",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "JEOs4q7ggSvuriRd",
+          "name": "My Gemini Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1kujmeTNWjFVyxaxoPBt_7W6k_hFVM8LHagCjkCOL_CQ",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        112,
+        240
+      ],
+      "id": "6b0c35c2-f133-495d-8efc-2ae28d753798",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "42U396SSIXcf4Qmo",
+          "name": "Google Sheets account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5ab884fe-aef0-4d46-a2b9-fcd5262a6cf5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "781b816a023e876c3eadcba54732fab8e9fe5f7309533c79160a4933fcdc296e"
+  },
+  "id": "zItARQBIy3FFFrKO",
+  "tags": []
+}
