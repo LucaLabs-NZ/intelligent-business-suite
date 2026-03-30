@@ -7,7 +7,7 @@ This repository contains the architecture and workflow files for a local, autono
 
 ## 🛠 Tech Stack
 * **Workflow Engine:** n8n (Local Docker Deployment)
-* **LLM / Brain:** Google Gemini 1.5 Flash (via API)
+* **LLM / Brain:** Google Gemini 2.5 Flash (via API)
 * **Database Target:** Google Sheets API
 * **Authentication:** Google Cloud Console (OAuth 2.0)
 
